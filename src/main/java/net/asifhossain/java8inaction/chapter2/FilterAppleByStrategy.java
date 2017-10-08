@@ -20,18 +20,40 @@ public class FilterAppleByStrategy {
         prettyPrintApple(Bucket.getApples(), new PrettyAppleFormatter());
 
         // Green apples
-        System.out.println(filter(Bucket.getApples(), apple -> "green".equals(apple.getColor())));
+        System.out.println(filter(Bucket.getApples(), new Predicate<Apple>() {
+            @Override
+            public boolean test(Apple apple) {
+                return "green".equals(apple.getColor());
+            }
+        }));
 
         // Heavy weight apples
-        System.out.println(filter(Bucket.getApples(), apple -> apple.getWeight() > 100));
+        System.out.println(filter(Bucket.getApples(), new Predicate<Apple>() {
+            @Override
+            public boolean test(Apple apple) {
+                return apple.getWeight() > 100;
+            }
+        }));
 
 
         // Sort by weight
-        apples.sort(compareInt(Apple::getWeight));
+        apples.sort(compareInt(new IntExtractor<Apple>() {
+            @Override
+            public int extractInt(Apple ob) {
+                return 0;
+            }
+        }));
+
         System.out.println(apples);
 
         // Sort by color
-        apples.sort(compareString(Apple::getColor));
+        apples.sort(compareString(new Formatter<Apple>() {
+            @Override
+            public String format(Apple apple) {
+                return apple.getColor();
+            }
+        }));
+
         System.out.println(apples);
     }
 
@@ -79,7 +101,6 @@ public class FilterAppleByStrategy {
         @Override
         public String format(Apple target) {
             return "A" + (target.getWeight() > 100 ? " heavy" : " light") + " " + target.getColor() + " apple.";
-
         }
     }
 
@@ -90,11 +111,21 @@ public class FilterAppleByStrategy {
     }
 
     static <T> Comparator<T> compareInt(IntExtractor<T> extractor) {
-        return (o1, o2) -> extractor.extractInt(o1) - extractor.extractInt(o2);
+        return new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return extractor.extractInt(o1) - extractor.extractInt(o2);
+            }
+        };
     }
 
     static <T> Comparator<T> compareString(Formatter<T> formatter) {
-        return (o1, o2) -> formatter.format(o1).compareTo(formatter.format(o2));
+        return new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return formatter.format(o1).compareTo(formatter.format(o2));
+            }
+        };
     }
 
     interface IntExtractor<T> {
