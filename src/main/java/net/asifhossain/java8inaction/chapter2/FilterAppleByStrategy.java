@@ -1,6 +1,7 @@
 package net.asifhossain.java8inaction.chapter2;
 
 import net.asifhossain.java8inaction.domain.Apple;
+import net.asifhossain.java8inaction.domain.Bucket;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -57,7 +58,7 @@ public class FilterAppleByStrategy {
         System.out.println(apples);
     }
 
-    interface Predicate<T> {
+    public interface Predicate<T> {
         boolean test(T obj);
     }
 
@@ -75,7 +76,7 @@ public class FilterAppleByStrategy {
         }
     }
 
-    static <T> List<T> filter(List<T> elements, Predicate<T> predicate) {
+    public static <T> List<T> filter(List<T> elements, Predicate<T> predicate) {
         List<T> matchedApples = new ArrayList<>();
         for (T element : elements) {
             if (predicate.test(element)) {

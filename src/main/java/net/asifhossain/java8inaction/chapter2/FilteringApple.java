@@ -1,6 +1,7 @@
 package net.asifhossain.java8inaction.chapter2;
 
 import net.asifhossain.java8inaction.domain.Apple;
+import net.asifhossain.java8inaction.domain.Bucket;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,10 @@
-package net.asifhossain.java8inaction.chapter2;
-
-import net.asifhossain.java8inaction.domain.Apple;
+package net.asifhossain.java8inaction.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Bucket {
-    static List<Apple> getApples() {
+public class Bucket {
+    public static List<Apple> getApples() {
         List<Apple> apples = new ArrayList<>();
 
         apples.add(new Apple("green", 100));
